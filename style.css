@@ -1,0 +1,209 @@
+:root {
+  /* Identidade visual — Caixa Certo */
+  --azul-confianca: #1a4d6d;
+  --azul-escuro: #0f3552;
+  --verde-saldo: #1f8a5f;
+  --vermelho-despesa: #c0392b;
+  --fundo: #f5f7f8;
+  --cartao: #ffffff;
+  --texto: #1c2b33;
+  --texto-suave: #5c6b73;
+  --borda: #e1e6e8;
+  --raio: 14px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--fundo);
+  color: var(--texto);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.topo {
+  background: linear-gradient(135deg, var(--azul-confianca), var(--azul-escuro));
+  color: #fff;
+  padding: 20px 20px 28px 20px;
+  border-radius: 0 0 20px 20px;
+}
+
+.topo .marca {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: 0.3px;
+}
+
+.topo .marca .icone {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.topo .loja {
+  margin-top: 4px;
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+.saldo-card {
+  margin: -18px 16px 0 16px;
+  background: var(--cartao);
+  border-radius: var(--raio);
+  padding: 18px 20px;
+  box-shadow: 0 6px 18px rgba(15,53,82,0.12);
+}
+
+.saldo-card .rotulo {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--texto-suave);
+  font-weight: 700;
+}
+
+.saldo-card .valor {
+  font-size: 32px;
+  font-weight: 800;
+  margin-top: 4px;
+}
+
+.saldo-card .valor.positivo { color: var(--verde-saldo); }
+.saldo-card .valor.negativo { color: var(--vermelho-despesa); }
+
+.resumo-linha {
+  display: flex;
+  gap: 12px;
+  margin: 16px;
+}
+
+.resumo-item {
+  flex: 1;
+  background: var(--cartao);
+  border-radius: var(--raio);
+  padding: 12px 14px;
+  border: 1px solid var(--borda);
+}
+
+.resumo-item .rotulo {
+  font-size: 11px;
+  color: var(--texto-suave);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.resumo-item .valor {
+  font-size: 18px;
+  font-weight: 800;
+  margin-top: 2px;
+}
+
+.acoes {
+  display: flex;
+  gap: 12px;
+  margin: 20px 16px;
+}
+
+.botao {
+  flex: 1;
+  border: none;
+  border-radius: var(--raio);
+  padding: 16px 12px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+}
+
+.botao.venda { background: var(--verde-saldo); }
+.botao.despesa { background: var(--vermelho-despesa); }
+
+.lista {
+  margin: 0 16px 24px 16px;
+}
+
+.lista h2 {
+  font-size: 14px;
+  color: var(--texto-suave);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 10px 4px;
+}
+
+.item-lista {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--cartao);
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+}
+
+.item-lista .desc { font-size: 14px; font-weight: 600; }
+.item-lista .data { font-size: 12px; color: var(--texto-suave); }
+.item-lista .valor { font-weight: 800; font-size: 15px; }
+.item-lista .valor.venda { color: var(--verde-saldo); }
+.item-lista .valor.despesa { color: var(--vermelho-despesa); }
+
+.tela-login {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+}
+
+.tela-login .icone-grande {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: var(--azul-confianca);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  margin-bottom: 14px;
+}
+
+.tela-login h1 { font-size: 22px; margin: 0 0 6px 0; }
+.tela-login p { color: var(--texto-suave); margin: 0 0 24px 0; font-size: 14px; }
+
+.campo {
+  width: 100%;
+  max-width: 320px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--borda);
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.botao-primario {
+  width: 100%;
+  max-width: 320px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: none;
+  background: var(--azul-confianca);
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  margin-top: 6px;
+}
+
+.oculto { display: none !important; }

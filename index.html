@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Caixa Certo — Multicoisas</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1a4d6d">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- TELA DE LOGIN -->
+  <div class="tela-login" id="telaLogin">
+    <div class="icone-grande">$</div>
+    <h1>Caixa Certo</h1>
+    <p>Controle financeiro</p>
+    <input class="campo" type="email" id="emailLogin" placeholder="E-mail">
+    <input class="campo" type="password" id="senhaLogin" placeholder="Senha">
+    <button class="botao-primario" id="btnEntrar">Entrar</button>
+  </div>
+
+  <!-- PAINEL PRINCIPAL -->
+  <div id="painel" class="oculto">
+    <div class="topo">
+      <div class="marca"><span class="icone">$</span> Caixa Certo</div>
+      <div class="loja">Multicoisas</div>
+    </div>
+
+    <div class="saldo-card">
+      <div class="rotulo">Saldo do dia</div>
+      <div class="valor positivo" id="saldoDia">R$ 0,00</div>
+    </div>
+
+    <div class="resumo-linha">
+      <div class="resumo-item">
+        <div class="rotulo">Vendas</div>
+        <div class="valor" id="totalVendas">R$ 0,00</div>
+      </div>
+      <div class="resumo-item">
+        <div class="rotulo">Despesas</div>
+        <div class="valor" id="totalDespesas">R$ 0,00</div>
+      </div>
+    </div>
+
+    <div class="acoes">
+      <button class="botao venda" id="btnNovaVenda">+ Venda</button>
+      <button class="botao despesa" id="btnNovaDespesa">+ Despesa</button>
+    </div>
+
+    <div class="lista">
+      <h2>Movimentações recentes</h2>
+      <div id="listaMovimentacoes">
+        <!-- itens inseridos via JS -->
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

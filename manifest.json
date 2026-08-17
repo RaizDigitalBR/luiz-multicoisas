@@ -1,0 +1,11 @@
+{
+  "name": "Caixa Certo — Multicoisas",
+  "short_name": "Caixa Certo",
+  "description": "Controle financeiro simples para loja: vendas, despesas e saldo do caixa.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f5f7f8",
+  "theme_color": "#1a4d6d",
+  "orientation": "portrait",
+  "icons": []
+}
