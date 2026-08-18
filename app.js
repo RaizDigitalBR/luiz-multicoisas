@@ -17,6 +17,21 @@ const listaEl = document.getElementById("listaMovimentacoes");
 const saldoDiaEl = document.getElementById("saldoDia");
 const totalVendasEl = document.getElementById("totalVendas");
 const totalDespesasEl = document.getElementById("totalDespesas");
+const totalDinheiroEl = document.getElementById("totalDinheiro");
+const totalPixEl = document.getElementById("totalPix");
+
+// elementos do modal
+const modalFundo = document.getElementById("modalFundo");
+const modalTitulo = document.getElementById("modalTitulo");
+const modalDescricao = document.getElementById("modalDescricao");
+const modalValor = document.getElementById("modalValor");
+const modalSalvar = document.getElementById("modalSalvar");
+const modalFechar = document.getElementById("modalFechar");
+const grupoFormaPagamento = document.getElementById("grupoFormaPagamento");
+const opcoesPagamento = document.querySelectorAll(".opcao-pagamento");
+
+let tipoAtual = "venda";
+let formaPagamentoAtual = "dinheiro";
 
 function formatarMoeda(valor) {
   return valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
@@ -43,27 +58,75 @@ onAuthStateChanged(auth, (usuario) => {
   }
 });
 
-// --- REGISTRAR VENDA / DESPESA (esboço — modal simples via prompt por enquanto) ---
-btnNovaVenda.addEventListener("click", () => registrar("venda"));
-btnNovaDespesa.addEventListener("click", () => registrar("despesa"));
+// --- REGISTRAR VENDA / DESPESA (modal) ---
+btnNovaVenda.addEventListener("click", () => abrirModal("venda"));
+btnNovaDespesa.addEventListener("click", () => abrirModal("despesa"));
+modalFechar.addEventListener("click", fecharModal);
+modalFundo.addEventListener("click", (evento) => {
+  if (evento.target === modalFundo) fecharModal();
+});
 
-async function registrar(tipo) {
-  const descricao = prompt(tipo === "venda" ? "O que foi vendido?" : "Qual foi a despesa?");
-  if (!descricao) return;
-  const valorTexto = prompt("Valor (R$):");
-  const valor = parseFloat((valorTexto || "0").replace(",", "."));
+opcoesPagamento.forEach((botao) => {
+  botao.addEventListener("click", () => {
+    formaPagamentoAtual = botao.dataset.forma;
+    opcoesPagamento.forEach((b) => b.classList.remove("selecionada"));
+    botao.classList.add("selecionada");
+  });
+});
+
+function abrirModal(tipo) {
+  tipoAtual = tipo;
+  modalTitulo.textContent = tipo === "venda" ? "Nova venda" : "Nova despesa";
+  modalDescricao.value = "";
+  modalValor.value = "";
+  formaPagamentoAtual = "dinheiro";
+  opcoesPagamento.forEach((b) => b.classList.toggle("selecionada", b.dataset.forma === "dinheiro"));
+
+  // forma de pagamento só faz sentido pra venda (o que entrou em dinheiro ou pix)
+  grupoFormaPagamento.classList.toggle("oculto", tipo !== "venda");
+
+  modalFundo.classList.remove("oculto");
+  modalDescricao.focus();
+}
+
+function fecharModal() {
+  modalFundo.classList.add("oculto");
+}
+
+modalSalvar.addEventListener("click", async () => {
+  const descricao = modalDescricao.value.trim();
+  const valor = parseFloat((modalValor.value || "0").replace(",", "."));
+
+  if (!descricao) {
+    alert("Descreve o que foi.");
+    return;
+  }
   if (!valor || valor <= 0) {
     alert("Valor inválido.");
     return;
   }
 
-  const colecao = tipo === "venda" ? "vendas" : "despesas";
-  await addDoc(collection(db, colecao), {
+  const colecao = tipoAtual === "venda" ? "vendas" : "despesas";
+  const dados = {
     descricao,
     valor,
     criadoEm: serverTimestamp()
-  });
-}
+  };
+  if (tipoAtual === "venda") {
+    dados.formaPagamento = formaPagamentoAtual; // "dinheiro" ou "pix"
+  }
+
+  modalSalvar.disabled = true;
+  try {
+    await addDoc(collection(db, colecao), dados);
+    fecharModal();
+  } catch (erro) {
+    alert("Não foi possível salvar. Tenta de novo.");
+    console.error(erro);
+  } finally {
+    modalSalvar.disabled = false;
+  }
+});
 
 // --- CARREGAR E CALCULAR ---
 function carregarMovimentacoes() {
@@ -89,8 +152,17 @@ function atualizarTela(vendas, despesas) {
   const totalDespesas = despesas.reduce((soma, d) => soma + (d.valor || 0), 0);
   const saldo = totalVendas - totalDespesas;
 
+  const totalDinheiro = vendas
+    .filter((v) => v.formaPagamento === "dinheiro")
+    .reduce((soma, v) => soma + (v.valor || 0), 0);
+  const totalPix = vendas
+    .filter((v) => v.formaPagamento === "pix")
+    .reduce((soma, v) => soma + (v.valor || 0), 0);
+
   totalVendasEl.textContent = formatarMoeda(totalVendas);
   totalDespesasEl.textContent = formatarMoeda(totalDespesas);
+  totalDinheiroEl.textContent = formatarMoeda(totalDinheiro);
+  totalPixEl.textContent = formatarMoeda(totalPix);
   saldoDiaEl.textContent = formatarMoeda(saldo);
   saldoDiaEl.className = "valor " + (saldo >= 0 ? "positivo" : "negativo");
 
@@ -104,7 +176,10 @@ function atualizarTela(vendas, despesas) {
     <div class="item-lista">
       <div>
         <div class="desc">${item.descricao}</div>
-        <div class="data">${item.tipo === "venda" ? "Venda" : "Despesa"}</div>
+        <div class="data">
+          ${item.tipo === "venda" ? "Venda" : "Despesa"}
+          ${item.formaPagamento ? `<span class="tag-pagamento">${item.formaPagamento === "pix" ? "Pix" : "Dinheiro"}</span>` : ""}
+        </div>
       </div>
       <div class="valor ${item.tipo}">${item.tipo === "despesa" ? "-" : "+"}${formatarMoeda(item.valor)}</div>
     </div>

@@ -14,7 +14,7 @@
   <div class="tela-login" id="telaLogin">
     <div class="icone-grande">$</div>
     <h1>Caixa Certo</h1>
-    <p>Controle financeiro</p>
+    <p>Controle financeiro da Multicoisas</p>
     <input class="campo" type="email" id="emailLogin" placeholder="E-mail">
     <input class="campo" type="password" id="senhaLogin" placeholder="Senha">
     <button class="botao-primario" id="btnEntrar">Entrar</button>
@@ -43,6 +43,17 @@
       </div>
     </div>
 
+    <div class="resumo-linha">
+      <div class="resumo-item">
+        <div class="rotulo">Recebido em dinheiro</div>
+        <div class="valor" id="totalDinheiro">R$ 0,00</div>
+      </div>
+      <div class="resumo-item">
+        <div class="rotulo">Recebido em Pix</div>
+        <div class="valor" id="totalPix">R$ 0,00</div>
+      </div>
+    </div>
+
     <div class="acoes">
       <button class="botao venda" id="btnNovaVenda">+ Venda</button>
       <button class="botao despesa" id="btnNovaDespesa">+ Despesa</button>
@@ -53,6 +64,32 @@
       <div id="listaMovimentacoes">
         <!-- itens inseridos via JS -->
       </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE REGISTRO -->
+  <div class="modal-fundo oculto" id="modalFundo">
+    <div class="modal-caixa">
+      <div class="modal-topo">
+        <h3 id="modalTitulo">Nova venda</h3>
+        <button class="modal-fechar" id="modalFechar">&times;</button>
+      </div>
+
+      <label class="modal-rotulo">Descrição</label>
+      <input class="campo" type="text" id="modalDescricao" placeholder="Ex: 2 pilhas AA">
+
+      <label class="modal-rotulo">Valor (R$)</label>
+      <input class="campo" type="number" step="0.01" min="0" id="modalValor" placeholder="0,00">
+
+      <div id="grupoFormaPagamento">
+        <label class="modal-rotulo">Forma de pagamento</label>
+        <div class="opcoes-pagamento">
+          <button type="button" class="opcao-pagamento selecionada" data-forma="dinheiro">Dinheiro</button>
+          <button type="button" class="opcao-pagamento" data-forma="pix">Pix</button>
+        </div>
+      </div>
+
+      <button class="botao-primario" id="modalSalvar">Salvar</button>
     </div>
   </div>
 

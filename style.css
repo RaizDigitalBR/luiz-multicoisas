@@ -207,3 +207,94 @@ body {
 }
 
 .oculto { display: none !important; }
+
+/* --- MODAL --- */
+.modal-fundo {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,53,82,0.45);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 50;
+}
+
+.modal-caixa {
+  background: var(--cartao);
+  width: 100%;
+  max-width: 420px;
+  border-radius: 20px 20px 0 0;
+  padding: 20px 20px 28px 20px;
+  box-shadow: 0 -8px 24px rgba(15,53,82,0.2);
+  animation: subir 0.18s ease-out;
+}
+
+@keyframes subir {
+  from { transform: translateY(24px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.modal-topo h3 { margin: 0; font-size: 17px; }
+
+.modal-fechar {
+  border: none;
+  background: var(--fundo);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 18px;
+  line-height: 1;
+  color: var(--texto-suave);
+  cursor: pointer;
+}
+
+.modal-rotulo {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--texto-suave);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin: 12px 2px 6px 2px;
+}
+
+.opcoes-pagamento {
+  display: flex;
+  gap: 10px;
+}
+
+.opcao-pagamento {
+  flex: 1;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1.5px solid var(--borda);
+  background: var(--cartao);
+  color: var(--texto);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.opcao-pagamento.selecionada {
+  border-color: var(--azul-confianca);
+  background: var(--azul-confianca);
+  color: #fff;
+}
+
+.tag-pagamento {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--fundo);
+  color: var(--texto-suave);
+  margin-left: 6px;
+}
